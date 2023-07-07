@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Documentation</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/documentation.css') }}">
+  {% include 'navbar.html' %}
+</head>
+<body>
+    <br>
+  <div class="content">
+    <div class="container">
+      <div class="info">
+        <h1>Documentation</h1>
+      </div>
+      <div id="page-content">
+        <h2>Introduction</h2>
+        <p>
+         Welcome to my the BetterEarth Technical take home exam Documentation! This documentation serves as a comprehensive guide  on Task 3 of the technical exam.        </p>
+        <p>
+          By integrating the fire code lookup API from <a href="https://ahjregistry.myorangebutton.com/#/ahj-search">AHJ Registry</a> and the utility rates database API from <a href="https://developer.nrel.gov/docs/electricity/utility-rates-v3/">NREL's Utility Rates v3</a>, we can provide a comprehensive tool for our design engineering team to assess fire pathways and determine the average kWh residential utility rate for a given location.
+        </p>
+        <p>
+          The documentation will showcase the Python Flask application and discuss the implementation details, including the use of OOP principles and the integration of the two APIs. We'll explain how the application takes an address input, retrieves the fire code and utility rate information, and presents the results in a JSON format.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {% include 'footer.html' %}
+</body>
+</html>
