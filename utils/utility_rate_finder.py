@@ -14,6 +14,7 @@ class UtilityRateFinder:
 
         try:
             response = requests.get(self.base_url, params=params)
+            print('hola')
             data = response.json()
 
             if "outputs" in data and "residential" in data["outputs"]:

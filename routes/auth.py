@@ -1,14 +1,20 @@
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 import mysql.connector
 import requests
-from utils.utility_rate_finder import UtilityRateFinder
+from mysite.utils.utility_rate_finder import UtilityRateFinder
+from requests.exceptions import ProxyError, ConnectionError
+
 
 auth_bp = Blueprint('auth', __name__, template_folder='../templates')
 
+proxies = {
+    "http": None,  # Bypass HTTP proxy
+    "https": None,  # Bypass HTTPS proxy
+}
 
 
 # Google Places API key
-google_api_key = 'AIzaSyCnz6CYBwoue5J559-_sgRLHD6WIaQKb3w'  
+google_api_key = 'AIzaSyCnz6CYBwoue5J559-_sgRLHD6WIaQKb3w'
 
 # NREL API key
 nrel_api_key = "bnHKPIbk3cLZrMdwsac1odH9LsAFEp5FYjzrlAzi"
@@ -65,21 +71,27 @@ def address_suggestions():
 
     return jsonify({'suggestions': suggestions})
 
-@auth_bp.route('/utility-rate',methods=['POST'])
+
+
+@auth_bp.route('/utility-rate', methods=['POST'])
 def utility_rate():
     data = request.get_json()
     address = data.get('address')
+    print(address)
 
     url = f'https://api.nrel.gov/utility_rates/v3.json?address={address}&api_key={nrel_api_key}'
 
-    response = requests.get(url)
-    data = response.json()
-
-    utility_rate = data['outputs']['residential'] if 'outputs' in data else None
-    
-    
+    try:
+        response = requests.get(url , proxies=proxies)
+        response.raise_for_status()
+        data = response.json()
+        utility_rate = data['outputs']['residential'] if 'outputs' in data else None
+    except (ProxyError, ConnectionError) as e:
+        print(f"Error occurred during API request: {str(e)}")
+        return jsonify({'error': 'Proxy Error'})
 
     return jsonify({'utility_rate': utility_rate})
+
 
 @auth_bp.route('/search', methods=['GET', 'POST'])
 def dashboard():

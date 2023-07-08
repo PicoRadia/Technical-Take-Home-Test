@@ -21,7 +21,10 @@ $(document).ready(function() {
     var bubblyButtons = document.getElementsByClassName("bubbly-button");
 
     for (var i = 0; i < bubblyButtons.length; i++) {
-        bubblyButtons[i].addEventListener('click', animateButton, false);
+        bubblyButtons[i].addEventListener('click', function(event) {
+            animateButton(event);
+            handleFormSubmit();
+        }, false);
     }
 
     // Function to handle address search suggestions
@@ -48,9 +51,6 @@ $(document).ready(function() {
                     } else {
                         suggestionsElement.style.display = 'none';
                     }
-                })
-                .catch(error => {
-                    console.error('Error occurred during address search:', error);
                 });
         } else {
             document.getElementById('suggestions').style.display = 'none';
@@ -68,10 +68,7 @@ $(document).ready(function() {
     $('#inpt_search').on('input', handleAddressSearch);
     $('#suggestions').on('click', 'p', selectSuggestion);
 
-    // Function to handle form submission
-    function handleFormSubmit(event) {
-        event.preventDefault();
-
+    function handleFormSubmit() {
         const addressInput = document.getElementById('inpt_search');
         const address = addressInput.value.trim();
 
@@ -89,22 +86,18 @@ $(document).ready(function() {
             })
                 .then(response => {
                     console.log('Received API response:', response);
-                    return response.json();
+                    return response.text(); // Read response text instead of JSON
                 })
                 .then(data => {
                     console.log('API response data:', data);
 
+                    // ... rest of the code
                     const resultAddressElement = document.getElementById('result-address');
                     const resultRateElement = document.getElementById('result-rate');
                     const resultContainer = document.getElementById('result-container');
 
-                    if (data.utility_rate) {
-                        resultAddressElement.textContent = `Address: ${address}`;
-                        resultRateElement.textContent = `Utility Rate: ${data.utility_rate}`;
-                        resultContainer.style.display = 'block';
-                    } else {
-                        resultContainer.style.display = 'none';
-                    }
+                    // ... handle response and update the UI based on the data
+
                 })
                 .catch(error => {
                     console.error('Error occurred during API request:', error);
@@ -115,15 +108,4 @@ $(document).ready(function() {
             resultContainer.style.display = 'none';
         }
     }
-
-    // Attach event listener to form submit
-    $('#address-form').on('submit', handleFormSubmit);
-    console.log('Form submit listener attached.');
-    
-    // Attach event listener to button click
-    $('.bubbly-button').on('click', function() {
-        const address = document.getElementById('inpt_search').value.trim();
-        console.log('Address:', address); // Log the address
-    });
-    console.log('Button click listener attached.');
 });
