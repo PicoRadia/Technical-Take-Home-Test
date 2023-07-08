@@ -1,8 +1,19 @@
-from flask import Blueprint, render_template, request, redirect, url_for ,  jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 import mysql.connector
 import requests
+from utils.utility_rate_finder import UtilityRateFinder
 
 auth_bp = Blueprint('auth', __name__, template_folder='../templates')
+
+
+
+# Google Places API key
+google_api_key = 'AIzaSyCnz6CYBwoue5J559-_sgRLHD6WIaQKb3w'  
+
+# NREL API key
+nrel_api_key = "bnHKPIbk3cLZrMdwsac1odH9LsAFEp5FYjzrlAzi"
+
+
 
 # Database configuration
 db_config = {
@@ -41,9 +52,8 @@ def login():
 @auth_bp.route('/address-suggestions')
 def address_suggestions():
     query = request.args.get('query')
-    api_key = 'AIzaSyCnz6CYBwoue5J559-_sgRLHD6WIaQKb3w'  
 
-    url = f'https://maps.googleapis.com/maps/api/place/autocomplete/json?input={query}&key={api_key}'
+    url = f'https://maps.googleapis.com/maps/api/place/autocomplete/json?input={query}&key={google_api_key}'
 
     response = requests.get(url)
     data = response.json()
@@ -55,28 +65,63 @@ def address_suggestions():
 
     return jsonify({'suggestions': suggestions})
 
+@auth_bp.route('/utility-rate',methods=['POST'])
+def utility_rate():
+    data = request.get_json()
+    address = data.get('address')
 
-@auth_bp.route('/search' , methods=['GET', 'POST'])
+    url = f'https://api.nrel.gov/utility_rates/v3.json?address={address}&api_key={nrel_api_key}'
+
+    response = requests.get(url)
+    data = response.json()
+
+    utility_rate = data['outputs']['residential'] if 'outputs' in data else None
+    
+    
+
+    return jsonify({'utility_rate': utility_rate})
+
+@auth_bp.route('/search', methods=['GET', 'POST'])
 def dashboard():
-    # Protected route for logged-in users
+    if request.method == 'POST':
+        address = request.form.get('address')
+
+        # Create an instance of UtilityRateFinder
+        rate_finder = UtilityRateFinder(api_key='bnHKPIbk3cLZrMdwsac1odH9LsAFEp5FYjzrlAzi')
+
+        # Get the utility rate using the address
+        utility_rate = rate_finder.get_utility_rate(address)
+
+        if utility_rate is not None:
+            # Successful utility rate retrieval
+            return render_template('dashboard.html', utility_rate=utility_rate)
+        else:
+            # Utility rate not found
+            error_message = 'Utility rate not found'
+            return render_template('dashboard.html', error_message=error_message)
+
+    # Render the initial dashboard template
     return render_template('dashboard.html')
 
-@auth_bp.route('/documentation' )
+
+
+@auth_bp.route('/documentation')
 def documentation():
     return render_template('documentation.html')
+
 
 @auth_bp.route('/logout')
 def logout():
     # Handle logout functionality
     return redirect(url_for('auth.login'))
 
-@auth_bp.route('/search')
-def search():
-    return render_template('dashboard.html')
+
+
 
 @auth_bp.route('/feedback')
 def feedback():
     return render_template('feedback.html')
+
 
 @auth_bp.route('/about')
 def about():

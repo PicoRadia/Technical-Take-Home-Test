@@ -81,10 +81,8 @@
     display: inline-block;
     font-size: 1.5em;
     padding: 1em 2em;
-    margin-top: 100px;
-    margin-bottom: 60px;
-    -webkit-appearance: none;
-    appearance: none;
+
+
     background-color: #22DD92;
     color: #fff;
     border-radius: 4px;
@@ -331,9 +329,6 @@
 
 
 
-
-
-
 .search-container {
   display: flex;
   justify-content: center;
@@ -362,6 +357,7 @@
   color: inherit;
   background: transparent;
   outline: none;
+  margin-right: 10px;
 }
 
 .bubbly-button {
@@ -379,6 +375,8 @@
   position: relative;
   transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
   box-shadow: 0 2px 25px rgba(45, 218, 74, 0.2);
+    margin-left: 10px;
+
 }
 
 
