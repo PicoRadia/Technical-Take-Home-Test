@@ -1,0 +1,6 @@
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust the height as per your design */
+}

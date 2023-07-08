@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for ,  jsonify
 import mysql.connector
+import requests
 
 auth_bp = Blueprint('auth', __name__, template_folder='../templates')
 
@@ -37,8 +38,25 @@ def login():
 
     return render_template('login.html')
 
+@auth_bp.route('/address-suggestions')
+def address_suggestions():
+    query = request.args.get('query')
+    api_key = 'AIzaSyCnz6CYBwoue5J559-_sgRLHD6WIaQKb3w'  
 
-@auth_bp.route('/dashboard' , methods=['GET', 'POST'])
+    url = f'https://maps.googleapis.com/maps/api/place/autocomplete/json?input={query}&key={api_key}'
+
+    response = requests.get(url)
+    data = response.json()
+
+    suggestions = []
+    if data['status'] == 'OK':
+        predictions = data['predictions']
+        suggestions = [prediction['description'] for prediction in predictions]
+
+    return jsonify({'suggestions': suggestions})
+
+
+@auth_bp.route('/search' , methods=['GET', 'POST'])
 def dashboard():
     # Protected route for logged-in users
     return render_template('dashboard.html')

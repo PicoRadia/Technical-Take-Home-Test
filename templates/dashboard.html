@@ -1,25 +1,46 @@
-<!-- dashboard.html -->
 <!DOCTYPE html>
 <html>
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"></script>
+    <link rel="icon" href="{{ url_for('static', filename='img/better-earth.webp') }}" type="image/webp">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+
     {% include 'navbar.html' %}
 </head>
+
+
 <body>
-     <div class="content">
-          <div class="container">
-            <div class="info">
-              <h1>Looking For Inspiration</h1>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus odit nihil ullam nesciunt quidem iste, Repellendus odit nihil</p>
-              <button>Button name</button>
+    <div class="bg-image"></div>
+
+
+    <div class="content">
+        <div class="cntr">
+            <div class="cntr-innr">
+
+                <h1 id = "title">Average kWh residential utility rate</h1>
+                 <p id ="desc">Simply enter the address of the location you're interested in. Once you submit the address, the application will retrieve the utility rate information from NREL's utility rates database.</p>
+                <br>
+                <form id="address-form">
+                     <div class="search-container">
+
+                    <label class="search" for="inpt_search">
+
+                    <input id="inpt_search" type="text" name="address" autocomplete="off" />
+                    <div id="suggestions"></div>
+
+                    </label>
+                    <br> <!-- Add line break -->
+                    <button class="bubbly-button">Search</button>
+                    </div>
+                </form>
             </div>
-            <div class="image">
-              <img src="https://i.postimg.cc/65QxYYzh/001234.png">
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
+{% include 'footer.html' %}
+
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 </body>
- {% include 'footer.html' %}
 </html>
