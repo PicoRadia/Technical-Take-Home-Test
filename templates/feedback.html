@@ -4,15 +4,28 @@
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}">
+
     {% include 'navbar.html' %}
 </head>
 <body>
-     <div class="content">
-          <div class="container">
-            <div class="info">
-              <h1>FEEDBACK</h1>
+  <div class="container">
+    <h1>Feedback Form</h1>
+    <form id="feedback-form"">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
 
-      </div>
+        <label for="object">Object:</label>
+        <input type="text" id="object" name="object" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+     <script src="feedback.js"></script>
 </body>
  {% include 'footer.html' %}
 </html>

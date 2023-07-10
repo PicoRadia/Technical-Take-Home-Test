@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, request, redirect, url_for, jsonify
 import mysql.connector
 import requests
-from mysite.utils.utility_rate_finder import UtilityRateFinder
+from utils.utility_rate_finder import UtilityRateFinder
 from requests.exceptions import ProxyError, ConnectionError
-
+import json
 
 auth_bp = Blueprint('auth', __name__, template_folder='../templates')
 
@@ -78,17 +78,22 @@ def utility_rate():
     data = request.get_json()
     address = data.get('address')
     print(address)
+    # Create an instance of UtilityRateFinder
+    rate_finder = UtilityRateFinder(api_key='bnHKPIbk3cLZrMdwsac1odH9LsAFEp5FYjzrlAzi')
 
-    url = f'https://api.nrel.gov/utility_rates/v3.json?address={address}&api_key={nrel_api_key}'
+    # Get the utility rate using the address
+    utility_rate = rate_finder.get_utility_rate(address)
 
-    try:
-        response = requests.get(url , proxies=proxies)
-        response.raise_for_status()
-        data = response.json()
-        utility_rate = data['outputs']['residential'] if 'outputs' in data else None
-    except (ProxyError, ConnectionError) as e:
-        print(f"Error occurred during API request: {str(e)}")
-        return jsonify({'error': 'Proxy Error'})
+    if utility_rate is not None:
+        output = {
+            "address": address,
+            "residential_utility_rate": utility_rate
+        }
+        json_output = json.dumps(output, indent=4)
+        print(json_output)
+    else:
+        print("Failed to retrieve utility rate.")
+
 
     return jsonify({'utility_rate': utility_rate})
 
@@ -113,7 +118,7 @@ def dashboard():
             return render_template('dashboard.html', error_message=error_message)
 
     # Render the initial dashboard template
-    return render_template('dashboard.html')
+    return render_template('dashboard.html', utility_rate=None, error_message=None)
 
 
 

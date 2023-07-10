@@ -4,15 +4,62 @@
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
     {% include 'navbar.html' %}
 </head>
 <body>
-     <div class="content">
-          <div class="container">
-            <div class="info">
-              <h1>ABOUT</h1>
+  <div class="container">
+    <h1>About</h1>
+    <p class="project-purpose">
+        The purpose of this project is to apply for the Python engineering job at Better Earth. I developed this project to demonstrate my skills in Python and showcase my ability to work on complex projects. It serves as a motivated tour de force, showcasing my dedication and passion for software development.
+    </p>
+    <div class="difficulties">
+      <h2>Difficulties Faced</h2>
+      <ul>
+          <li>
+              <p>
+                  One of the challenges I encountered was obtaining the token for Task 1. Due to the sensitive nature of the API, obtaining the token required additional steps and permissions. Although I was unable to acquire the token, this challenge allowed me to explore alternative solutions and enhance my adaptability.
+              </p>
+          </li>
+          <li>
+              <p>
+                  Another difficulty arose when deploying the application on PythonAnywhere. The API for utility rates that I used was not widely supported by the platform. To overcome this, I actively engaged with the PythonAnywhere community by posting on the forum to request the addition of the API. This initiative showcased my determination and willingness to explore solutions beyond the initial roadblocks.
+              </p>
+          </li>
+      </ul>
+  </div>
+  <div class="technologies">
+    <h2>Technologies Used</h2>
+    <p>
+        For this project, I utilized a combination of HTML, CSS, and JavaScript to develop the website's frontend. HTML provided the structure and semantic markup for the webpages, while CSS was used for styling and visual enhancements. JavaScript was employed to add interactivity and dynamic features to the website.
+    </p>
+    <p>
+        In addition to these frontend technologies, I integrated external APIs to enhance the functionality of the application. I leveraged the utility rate API to retrieve utility rate data and the Google Geocoding API to convert addresses into geographic coordinates. For data storage, I utilized a MySQL database to store and retrieve information efficiently.
+    </p>
+    <p>
+        To handle the backend logic and serve the web application, I used Flask, a lightweight web framework in Python. Flask allowed me to create routes, handle requests, and interact with the database seamlessly. The combination of these technologies enabled me to build a robust and user-friendly web application.
+    </p>
+</div>
+    <h2>Open Source Code</h2>
+    <ul class="open-source-list">
+        <a href = "https://codepen.io/nourabusoud/pen/ypZzMM"> https://codepen.io/nourabusoud/pen/ypZzMM</a><br>
+        <a href = "https://codepen.io/soufiane-khalfaoui-hassani/pen/LYpPWda">https://codepen.io/soufiane-khalfaoui-hassani/pen/LYpPWda</a>
+     
 
-      </div>
+    </ul> 
+    <div class="reasons">
+      <h2>Reasons to Join Better Earth</h2>
+      <p>
+          I am incredibly motivated to join Better Earth as a Python Engineer, and I believe my skills and passion align perfectly with the company's mission. Better Earth's commitment to sustainability and environmental impact resonates deeply with me. I am dedicated to using technology and innovation to contribute to a greener and more sustainable future.
+      </p>
+      <p>
+          This opportunity at Better Earth presents a unique chance for me to combine my technical expertise with my environmental consciousness. I am enthusiastic about leveraging my skills in Python to develop solutions that address environmental challenges. The prospect of working alongside a team of like-minded individuals who share a common goal is truly inspiring.
+      </p>
+      <p>
+          I am confident that my adaptability, problem-solving skills, and strong work ethic make me an ideal candidate for this position. I am eager to contribute to Better Earth's mission and make a positive impact through my work. Joining Better Earth would not only allow me to grow professionally but also provide a platform for me to make a tangible difference in the world.
+      </p>
+  </div>
+</div>
 </body>
  {% include 'footer.html' %}
 </html>

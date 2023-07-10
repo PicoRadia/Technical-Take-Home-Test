@@ -1,0 +1,31 @@
+h1 {
+    text-align: center;
+    font-size: 42px;
+}
+
+
+.container {
+    padding-left: 80px;
+    padding-right: 80px;
+    
+
+  }
+
+  project-purpose h2,
+        .difficulties h2,
+        .technologies h2,
+        .opensource h2 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .difficulties li,
+        .technologies li,
+      
+        .open-source-list li {
+            font-size: 18px;
+        }
+
+p{
+    font-size: 18px;
+}
