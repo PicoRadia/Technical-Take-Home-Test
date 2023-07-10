@@ -14,19 +14,19 @@ proxies = {
 
 
 # Google Places API key
-google_api_key = 'AIzaSyCnz6CYBwoue5J559-_sgRLHD6WIaQKb3w'
+google_api_key = ''
 
 # NREL API key
-nrel_api_key = "bnHKPIbk3cLZrMdwsac1odH9LsAFEp5FYjzrlAzi"
+nrel_api_key = ""
 
 
 
 # Database configuration
 db_config = {
-    'host': 'picoRadia.mysql.pythonanywhere-services.com',
-    'user': 'picoRadia',
-    'password': 'radia@betterearth',
-    'database': 'picoRadia$better_earth_db'
+    'host': '',
+    'user': '',
+    'password': '',
+    'database': ''
 }
 
 @auth_bp.route('/', methods=['GET', 'POST'])
